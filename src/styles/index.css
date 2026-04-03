@@ -27,6 +27,48 @@ canvas {
   pointer-events: none;
 }
 
+/* Mobile blocker */
+.mobile-blocker {
+  position: fixed;
+  inset: 0;
+  background: #0a0a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.mobile-blocker-content {
+  text-align: center;
+  padding: 32px;
+  max-width: 320px;
+}
+
+.mobile-blocker-icon {
+  font-size: 48px;
+  margin-bottom: 24px;
+}
+
+.mobile-blocker-content h1 {
+  color: #f0f0f0;
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+}
+
+.mobile-blocker-content p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.mobile-blocker-hint {
+  margin-top: 12px;
+  font-size: 13px !important;
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+
 .hud-hint {
   color: rgba(255, 255, 255, 0.85);
   font-size: 14px;
