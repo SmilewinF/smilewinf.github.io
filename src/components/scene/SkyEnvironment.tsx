@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Sky, Clouds, Cloud } from "@react-three/drei";
+import { Environment, Clouds, Cloud } from "@react-three/drei";
 import * as THREE from "three";
 
 interface CloudData {
@@ -53,11 +53,12 @@ function MovingClouds() {
         <Cloud
           key={i}
           position={cloud.position.toArray()}
-          opacity={0.5}
+          opacity={0.6}
           speed={0.2}
           bounds={[cloud.scale * 2, cloud.scale * 0.6, cloud.scale * 0.8]}
           volume={cloud.scale}
           segments={20}
+          color="#ffffff"
         />
       ))}
     </Clouds>
@@ -67,12 +68,11 @@ function MovingClouds() {
 export function SkyEnvironment() {
   return (
     <>
-      <Sky
-        sunPosition={[100, 40, 100]}
-        turbidity={8}
-        rayleigh={2}
-        mieCoefficient={0.005}
-        mieDirectionalG={0.8}
+      <Environment
+        files="/RenderCrate-HDRI_Aerial_Sky_17_4K.exr"
+        background
+        backgroundIntensity={1}
+        environmentIntensity={0.8}
       />
       <MovingClouds />
     </>
