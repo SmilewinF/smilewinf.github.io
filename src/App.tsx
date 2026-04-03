@@ -5,6 +5,7 @@ import { Lighting } from "./components/canvas/Lighting";
 import { LoadingTracker } from "./components/canvas/LoadingTracker";
 import { SkyEnvironment } from "./components/scene/SkyEnvironment";
 import { FighterJet } from "./components/scene/FighterJet";
+import { Wingmen } from "./components/scene/Wingmen";
 import { LoadingScreen } from "./components/overlay/LoadingScreen";
 import { HUD } from "./components/overlay/HUD";
 import { PilotPanel } from "./components/ui-panels/PilotPanel";
@@ -80,6 +81,7 @@ export default function App() {
         <Lighting />
         <SkyEnvironment />
         <FighterJet />
+        <Wingmen />
       </Canvas>
     </>
   );

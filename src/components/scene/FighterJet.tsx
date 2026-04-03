@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { Hotspot } from "./Hotspot";
+import { VaporTrail } from "./VaporTrail";
 
 const MODEL_PATH = "/sukhoi_su-34.glb";
 
@@ -35,6 +36,10 @@ export function FighterJet() {
         rotation={[0, Math.PI / 2, 0]}
         position={[-1.5, 0, 0]}
       />
+
+      {/* Vapor trails on wingtips */}
+      <VaporTrail position={[-2.5, 0, -2.3]} length={14} opacity={0.25} />
+      <VaporTrail position={[-2.5, 0, 2.2]} length={14} opacity={0.25} />
 
       <Hotspot name="pilot" position={[1.0, 0.25, 0]} label="About Me" />
       <Hotspot name="nose" position={[2.0, 0, -0.2]} label="Projects" />
