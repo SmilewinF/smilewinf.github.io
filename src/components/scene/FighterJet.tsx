@@ -33,12 +33,12 @@ export function FighterJet() {
         object={scene}
         scale={0.3}
         rotation={[0, Math.PI / 2, 0]}
-        position={[0, 0, 0]}
+        position={[-1.5, 0, 0]}
       />
 
-      <Hotspot name="pilot" position={[2, 2.5, 0]} label="Pilot" />
-      <Hotspot name="nose" position={[10, 0, 0]} label="Nose" />
-      <Hotspot name="wing" position={[-2, 0.3, -6]} label="Wing" />
+      <Hotspot name="pilot" position={[1.0, 0.25, 0]} label="Pilot" />
+      <Hotspot name="nose" position={[2.0, 0, -0.2]} label="Nose" />
+      <Hotspot name="wing" position={[-1.5, 0.3, -2.0]} label="Wing" />
     </group>
   );
 }

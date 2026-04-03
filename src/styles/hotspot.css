@@ -1,24 +1,24 @@
 .hotspot-dot {
   width: 16px;
   height: 16px;
-  background: rgba(255, 107, 107, 0.9);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 50%;
   cursor: pointer;
   position: relative;
-  box-shadow: 0 0 12px rgba(255, 107, 107, 0.6);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
   transition: background 0.2s, box-shadow 0.2s;
 }
 
 .hotspot-dot:hover {
-  background: rgba(255, 221, 87, 1);
-  box-shadow: 0 0 20px rgba(255, 221, 87, 0.8);
+  background: rgba(200, 220, 255, 1);
+  box-shadow: 0 0 20px rgba(200, 220, 255, 0.8);
 }
 
 .hotspot-pulse {
   position: absolute;
   inset: -8px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 107, 107, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.6);
   animation: hotspotPulse 1.5s ease-out infinite;
 }
 
