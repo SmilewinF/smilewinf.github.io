@@ -3,31 +3,37 @@ import { Canvas } from "@react-three/fiber";
 import { CameraRig } from "./components/canvas/CameraRig";
 import { Lighting } from "./components/canvas/Lighting";
 import { LoadingTracker } from "./components/canvas/LoadingTracker";
-import { IntroSequence } from "./components/intro/IntroSequence";
-import { Room } from "./components/room/Room";
+import { SkyEnvironment } from "./components/scene/SkyEnvironment";
+import { FighterJet } from "./components/scene/FighterJet";
 import { LoadingScreen } from "./components/overlay/LoadingScreen";
 import { HUD } from "./components/overlay/HUD";
+import { PilotPanel } from "./components/ui-panels/PilotPanel";
+import { NosePanel } from "./components/ui-panels/NosePanel";
+import { WingPanel } from "./components/ui-panels/WingPanel";
 import { useAppStore } from "./stores/useAppStore";
 import "./styles/index.css";
 
 export default function App() {
-  const closeSection = useAppStore((s) => s.closeSection);
+  const closeHotspot = useAppStore((s) => s.closeHotspot);
   const phase = useAppStore((s) => s.phase);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && phase === "viewing-section") {
-        closeSection();
+      if (e.key === "Escape" && phase === "viewing-hotspot") {
+        closeHotspot();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [phase, closeSection]);
+  }, [phase, closeHotspot]);
 
   return (
     <>
       <LoadingScreen />
       <HUD />
+      <PilotPanel />
+      <NosePanel />
+      <WingPanel />
       <Canvas
         shadows
         gl={{ antialias: true, alpha: false }}
@@ -36,10 +42,8 @@ export default function App() {
         <LoadingTracker />
         <CameraRig />
         <Lighting />
-        <color attach="background" args={["#1a1a2e"]} />
-        <fog attach="fog" args={["#1a1a2e", 15, 30]} />
-        <IntroSequence />
-        <Room />
+        <SkyEnvironment />
+        <FighterJet />
       </Canvas>
     </>
   );

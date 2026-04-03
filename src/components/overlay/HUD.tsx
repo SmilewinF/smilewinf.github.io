@@ -8,10 +8,10 @@ export function HUD() {
   return (
     <div className="hud">
       {phase === "exploring" && (
-        <p className="hud-hint">Click on objects to explore</p>
+        <p className="hud-hint">Click the glowing markers to explore</p>
       )}
-      {phase === "viewing-section" && (
-        <p className="hud-hint">Press ESC to go back</p>
+      {phase === "viewing-hotspot" && (
+        <p className="hud-hint">Press ESC to close</p>
       )}
     </div>
   );
