@@ -13,50 +13,55 @@ export function Character({ active, onImpact }: CharacterProps) {
   const elapsed = useRef(0);
   const impactFired = useRef(false);
 
-  // Parabolic arc parameters
-  const startPos = new THREE.Vector3(0, 8, -12);
-  const endPos = new THREE.Vector3(0, 0.5, -2);
-  const impactPos = new THREE.Vector3(0, 3, -5); // window position
-  const totalDuration = 2.0;
-  const impactTime = 0.8;
+  // Spider-Man style: swing in from far away, arc through the air, crash through window
+  const startPos = new THREE.Vector3(-10, 15, -25); // far outside, high up
+  const windowPos = new THREE.Vector3(0, 3.5, -5);  // the window
+  const landPos = new THREE.Vector3(0, 0.8, -1);    // landing in the room
+  const impactTime = 2.3; // matches camera keyframe timing
+  const totalDuration = 3.8;
 
   useFrame((_, delta) => {
     if (!active || !meshRef.current) return;
 
     elapsed.current += delta;
-    const t = Math.min(elapsed.current / totalDuration, 1);
 
     if (elapsed.current >= impactTime && !impactFired.current) {
       impactFired.current = true;
       onImpact();
     }
 
-    // Parabolic arc
     let pos: THREE.Vector3;
+
     if (elapsed.current < impactTime) {
-      // Pre-impact: fly toward window
+      // Pre-impact: swing toward window in a big arc
       const p = elapsed.current / impactTime;
-      pos = new THREE.Vector3().lerpVectors(startPos, impactPos, p);
-      pos.y += Math.sin(p * Math.PI) * 2; // arc upward
+      const eased = p * p; // accelerating — like falling/swinging
+      pos = new THREE.Vector3().lerpVectors(startPos, windowPos, eased);
+      // Add a big arc — swing high then dive down
+      pos.y += Math.sin(p * Math.PI) * 6;
+      // Slight lateral swing
+      pos.x += Math.sin(p * Math.PI * 1.5) * 3;
     } else {
-      // Post-impact: tumble into room
-      const p = (elapsed.current - impactTime) / (totalDuration - impactTime);
-      const eased = 1 - Math.pow(1 - Math.min(p, 1), 2);
-      pos = new THREE.Vector3().lerpVectors(impactPos, endPos, eased);
-      // Bounce effect
-      pos.y += Math.sin(eased * Math.PI) * 1.5;
+      // Post-impact: tumble into room, decelerating
+      const p = Math.min((elapsed.current - impactTime) / (totalDuration - impactTime), 1);
+      const eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
+      pos = new THREE.Vector3().lerpVectors(windowPos, landPos, eased);
+      // Small bounce
+      pos.y += Math.sin(eased * Math.PI) * 1.0;
     }
 
     meshRef.current.position.copy(pos);
-    // Tumble rotation
-    meshRef.current.rotation.x = t * Math.PI * 3;
-    meshRef.current.rotation.z = t * Math.PI * 1.5;
+
+    // Tumbling rotation
+    const t = elapsed.current / totalDuration;
+    meshRef.current.rotation.x = t * Math.PI * 4;
+    meshRef.current.rotation.z = t * Math.PI * 2;
   });
 
   if (!active) return null;
 
   return (
-    <mesh ref={meshRef} position={[0, 8, -12]} castShadow>
+    <mesh ref={meshRef} position={[-10, 15, -25]} castShadow>
       <capsuleGeometry args={[0.3, 0.8, 4, 8]} />
       <meshStandardMaterial color={COLORS.accent} />
     </mesh>

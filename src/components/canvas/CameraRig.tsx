@@ -6,7 +6,7 @@ import { useAppStore } from "../../stores/useAppStore";
 
 export function CameraRig() {
   const cameraRef = useRef<THREE.PerspectiveCamera>(null);
-  const currentLookAt = useRef(new THREE.Vector3(0, 2, 0));
+  const currentLookAt = useRef(new THREE.Vector3(0, 3, -5));
   const cameraTarget = useAppStore((s) => s.cameraTarget);
   const phase = useAppStore((s) => s.phase);
 
@@ -16,12 +16,17 @@ export function CameraRig() {
     const targetPos = new THREE.Vector3(...cameraTarget.position);
     const targetLookAt = new THREE.Vector3(...cameraTarget.lookAt);
 
-    // During intro, follow more snappily; otherwise smooth
-    const dampBase = phase === "intro" ? 0.00001 : 0.001;
-    const lerpFactor = 1 - Math.pow(dampBase, delta);
+    if (phase === "intro") {
+      // During intro, directly follow the keyframe positions (IntroSequence drives these)
+      cameraRef.current.position.copy(targetPos);
+      currentLookAt.current.copy(targetLookAt);
+    } else {
+      // Smooth exponential decay for exploration/section transitions
+      const lerpFactor = 1 - Math.pow(0.001, delta);
+      cameraRef.current.position.lerp(targetPos, lerpFactor);
+      currentLookAt.current.lerp(targetLookAt, lerpFactor);
+    }
 
-    cameraRef.current.position.lerp(targetPos, lerpFactor);
-    currentLookAt.current.lerp(targetLookAt, lerpFactor);
     cameraRef.current.lookAt(currentLookAt.current);
   });
 
@@ -30,7 +35,7 @@ export function CameraRig() {
       ref={cameraRef}
       makeDefault
       fov={50}
-      position={[0, 5, 18]}
+      position={[3, 6, -15]}
       near={0.1}
       far={100}
     />

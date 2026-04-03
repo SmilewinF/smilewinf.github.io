@@ -3,7 +3,7 @@ import { projectsContent } from "../../constants/content";
 
 export function ProjectsPanel() {
   return (
-    <FloatingPanel section="projects" position={[0, 2, 2]}>
+    <FloatingPanel section="projects">
       <h2 className="panel-title">Projects</h2>
       <div className="panel-items">
         {projectsContent.map((item, i) => (

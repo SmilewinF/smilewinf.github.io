@@ -3,7 +3,7 @@ import { skillsContent } from "../../constants/content";
 
 export function SkillsPanel() {
   return (
-    <FloatingPanel section="skills" position={[0, 0, 2]}>
+    <FloatingPanel section="skills">
       <h2 className="panel-title">Skills</h2>
       <div className="panel-items">
         {Object.entries(skillsContent).map(([category, skills]) => (

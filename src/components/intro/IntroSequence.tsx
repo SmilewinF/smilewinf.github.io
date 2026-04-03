@@ -13,16 +13,23 @@ interface CameraKeyframe {
 }
 
 const CAMERA_KEYFRAMES: CameraKeyframe[] = [
-  { time: 0.0, position: [3, 6, -15], lookAt: [0, 3, -5] },
-  { time: 0.5, position: [2, 5, -10], lookAt: [0, 4, -5] },
-  { time: 0.8, position: [1, 4, -6], lookAt: [0, 3, -5] },
-  { time: 1.2, position: [0.5, 3, -2], lookAt: [0, 2, -3] },
-  { time: 2.0, position: [-2, 3.5, 2], lookAt: [0, 1.5, 0] },
-  { time: 3.0, position: [-1, 4, 6], lookAt: [0, 1, 0] },
-  { time: 4.0, position: CAMERA_OVERVIEW.position, lookAt: CAMERA_OVERVIEW.lookAt },
+  // Start: outside the building, looking at the window from a distance
+  { time: 0.0, position: [8, 8, -20], lookAt: [0, 4, -5] },
+  // Track character approaching — dramatic angle
+  { time: 1.0, position: [5, 6, -14], lookAt: [0, 5, -8] },
+  // Close to window, character about to hit
+  { time: 2.0, position: [2, 5, -8], lookAt: [0, 4, -5] },
+  // IMPACT — close up, slight side angle
+  { time: 2.5, position: [1.5, 3.5, -4], lookAt: [0, 3, -5] },
+  // Post-impact: pull back into the room, watching character tumble
+  { time: 3.5, position: [-2, 4, 0], lookAt: [0, 1.5, -2] },
+  // Sweeping view of the room
+  { time: 5.0, position: [-3, 5, 5], lookAt: [0, 1.5, 0] },
+  // Settle to overview
+  { time: 6.5, position: CAMERA_OVERVIEW.position, lookAt: CAMERA_OVERVIEW.lookAt },
 ];
 
-const TOTAL_DURATION = 4.5; // extra settle time after last keyframe
+const TOTAL_DURATION = 7.5;
 
 function lerpKeyframes(keyframes: CameraKeyframe[], t: number): CameraKeyframe {
   if (t <= keyframes[0].time) return keyframes[0];
@@ -34,7 +41,7 @@ function lerpKeyframes(keyframes: CameraKeyframe[], t: number): CameraKeyframe {
   const a = keyframes[i];
   const b = keyframes[i + 1];
   const p = (t - a.time) / (b.time - a.time);
-  const eased = p * p * (3 - 2 * p); // smoothstep
+  const eased = p * p * (3 - 2 * p);
 
   const lerp = (from: number, to: number) => from + (to - from) * eased;
 
@@ -71,14 +78,14 @@ export function IntroSequence() {
     elapsed.current += delta;
     const t = elapsed.current;
 
-    // Camera shake during impact window (t = 0.8 to 1.5)
     const kf = lerpKeyframes(CAMERA_KEYFRAMES, t);
-    const shakeWindow = t > 0.8 && t < 1.5;
 
-    if (shakeWindow) {
-      const decay = 1 - (t - 0.8) / 0.7;
-      const shakeX = Math.sin(t * 40) * 0.15 * decay;
-      const shakeY = Math.cos(t * 30) * 0.1 * decay;
+    // Camera shake during impact window (t = 2.3 to 3.2)
+    if (t > 2.3 && t < 3.2) {
+      const decay = 1 - (t - 2.3) / 0.9;
+      const intensity = decay * decay; // quadratic decay for snappier falloff
+      const shakeX = Math.sin(t * 45) * 0.2 * intensity;
+      const shakeY = Math.cos(t * 35) * 0.15 * intensity;
       kf.position = [
         kf.position[0] + shakeX,
         kf.position[1] + shakeY,
@@ -98,7 +105,7 @@ export function IntroSequence() {
 
   return (
     <group>
-      <Character active={phase === "intro"} onImpact={handleImpact} />
+      <Character active onImpact={handleImpact} />
       <GlassWindow broken={glassBroken} />
       <GlassShards active={glassBroken} />
     </group>

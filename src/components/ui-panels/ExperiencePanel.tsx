@@ -3,7 +3,7 @@ import { experienceContent } from "../../constants/content";
 
 export function ExperiencePanel() {
   return (
-    <FloatingPanel section="experience" position={[0, 2, 2]}>
+    <FloatingPanel section="experience">
       <h2 className="panel-title">Experience</h2>
       <div className="panel-items">
         {experienceContent.map((item, i) => (

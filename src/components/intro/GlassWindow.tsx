@@ -7,9 +7,10 @@ interface GlassWindowProps {
 export function GlassWindow({ broken }: GlassWindowProps) {
   if (broken) return null;
 
+  // Matches the window opening: centered at (0, 2.0, -5), 1.2m wide, 1.6m tall
   return (
-    <mesh position={[0, 3, -4.95]}>
-      <planeGeometry args={[2, 3]} />
+    <mesh position={[0, 2.0, -4.95]}>
+      <planeGeometry args={[1.2, 1.6]} />
       <meshPhysicalMaterial
         color={COLORS.glass}
         transmission={0.9}
