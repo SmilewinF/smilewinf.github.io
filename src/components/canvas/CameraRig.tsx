@@ -93,7 +93,7 @@ export function CameraRig() {
       ref={cameraRef}
       makeDefault
       fov={50}
-      position={[-12, -1, 0]}
+      position={[-5, 0.5, -1]}
       near={0.1}
       far={500}
     />
