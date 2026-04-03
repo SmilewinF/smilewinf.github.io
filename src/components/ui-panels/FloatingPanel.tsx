@@ -15,8 +15,8 @@ export function FloatingPanel({ hotspot, children }: FloatingPanelProps) {
   if (activeHotspot !== hotspot) return null;
 
   return createPortal(
-    <div className="floating-panel-overlay">
-      <div className="floating-panel">
+    <div className="floating-panel-backdrop" onClick={closeHotspot}>
+      <div className="floating-panel" onClick={(e) => e.stopPropagation()}>
         <button className="panel-close" onClick={closeHotspot}>
           &times;
         </button>
