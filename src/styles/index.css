@@ -18,6 +18,21 @@ canvas {
   display: block;
 }
 
+.logo {
+  position: fixed;
+  top: 24px;
+  left: 28px;
+  z-index: 15;
+  cursor: pointer;
+  opacity: 0.9;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+  transition: opacity 0.2s;
+}
+
+.logo:hover {
+  opacity: 1;
+}
+
 .hud {
   position: fixed;
   bottom: 32px;
@@ -44,9 +59,9 @@ canvas {
   max-width: 320px;
 }
 
-.mobile-blocker-icon {
-  font-size: 48px;
+.mobile-blocker-logo {
   margin-bottom: 24px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
 }
 
 .mobile-blocker-content h1 {

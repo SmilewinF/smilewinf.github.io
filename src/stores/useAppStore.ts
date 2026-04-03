@@ -9,6 +9,7 @@ interface AppState {
   phase: Phase;
   activeHotspot: Hotspot | null;
   hoveredHotspot: Hotspot | null;
+  introVersion: number;
 
   setLoadingProgress: (p: number) => void;
   setLoaded: () => void;
@@ -17,6 +18,7 @@ interface AppState {
   openHotspot: (h: Hotspot) => void;
   closeHotspot: () => void;
   setHoveredHotspot: (h: Hotspot | null) => void;
+  replayIntro: () => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -25,6 +27,7 @@ export const useAppStore = create<AppState>((set) => ({
   phase: "loading",
   activeHotspot: null,
   hoveredHotspot: null,
+  introVersion: 0,
 
   setLoadingProgress: (p) => set({ loadingProgress: p }),
   setLoaded: () => set({ isLoaded: true }),
@@ -33,4 +36,11 @@ export const useAppStore = create<AppState>((set) => ({
   openHotspot: (h) => set({ activeHotspot: h, phase: "viewing-hotspot" }),
   closeHotspot: () => set({ activeHotspot: null, phase: "exploring" }),
   setHoveredHotspot: (h) => set({ hoveredHotspot: h }),
+  replayIntro: () =>
+    set((s) => ({
+      phase: "intro",
+      activeHotspot: null,
+      hoveredHotspot: null,
+      introVersion: s.introVersion + 1,
+    })),
 }));

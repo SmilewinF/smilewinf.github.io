@@ -63,6 +63,15 @@ export function CameraRig() {
 
   const phase = useAppStore((s) => s.phase);
   const setIntroComplete = useAppStore((s) => s.setIntroComplete);
+  const introVersion = useAppStore((s) => s.introVersion);
+  const lastVersion = useRef(introVersion);
+
+  // Reset intro state when replayIntro is triggered
+  if (introVersion !== lastVersion.current) {
+    lastVersion.current = introVersion;
+    elapsed.current = 0;
+    introCompleted.current = false;
+  }
 
   useFrame((_, delta) => {
     if (!cameraRef.current) return;

@@ -8,6 +8,7 @@ import { FighterJet } from "./components/scene/FighterJet";
 import { Wingmen } from "./components/scene/Wingmen";
 import { LoadingScreen } from "./components/overlay/LoadingScreen";
 import { HUD } from "./components/overlay/HUD";
+import { Logo } from "./components/overlay/Logo";
 import { PilotPanel } from "./components/ui-panels/PilotPanel";
 import { NosePanel } from "./components/ui-panels/NosePanel";
 import { WingPanel } from "./components/ui-panels/WingPanel";
@@ -36,7 +37,26 @@ function MobileBlocker() {
   return (
     <div className="mobile-blocker">
       <div className="mobile-blocker-content">
-        <div className="mobile-blocker-icon">&#9992;</div>
+        <svg
+          className="mobile-blocker-logo"
+          viewBox="0 0 120 60"
+          width="120"
+          height="60"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <text
+            x="60"
+            y="46"
+            textAnchor="middle"
+            fill="#ffffff"
+            fontFamily="'Dancing Script', cursive"
+            fontSize="52"
+            fontWeight="700"
+            fontStyle="italic"
+          >
+            SH
+          </text>
+        </svg>
         <h1>Smilewin Haveluck</h1>
         <p>This experience is best viewed on a larger screen.</p>
         <p className="mobile-blocker-hint">Please visit on a desktop or laptop.</p>
@@ -66,6 +86,7 @@ export default function App() {
 
   return (
     <>
+      <Logo />
       <LoadingScreen />
       <HUD />
       <PilotPanel />
