@@ -9,13 +9,12 @@ export function LoadingScreen() {
   const startIntro = useAppStore((s) => s.startIntro);
   const started = useRef(false);
 
-  // Use a timeout instead of onTransitionEnd (which fires for child elements too)
   useEffect(() => {
     if (isLoaded && phase === "loading" && !started.current) {
       started.current = true;
       const timer = setTimeout(() => {
         startIntro();
-      }, 700); // matches the CSS fade-out duration
+      }, 800);
       return () => clearTimeout(timer);
     }
   }, [isLoaded, phase, startIntro]);
@@ -23,7 +22,8 @@ export function LoadingScreen() {
   return (
     <div className={`loading-screen ${isLoaded ? "loaded" : ""}`}>
       <div className="loading-content">
-        <h1 className="loading-title">Portfolio</h1>
+        <h1 className="loading-title">Smilewin Haveluck</h1>
+        <div className="loading-subtitle">Loading experience...</div>
         <div className="loading-bar-container">
           <div
             className="loading-bar"
@@ -31,6 +31,11 @@ export function LoadingScreen() {
           />
         </div>
         <p className="loading-percentage">{Math.round(loadingProgress)}%</p>
+      </div>
+      <div className="loading-dots">
+        <span className="dot" />
+        <span className="dot" />
+        <span className="dot" />
       </div>
     </div>
   );
