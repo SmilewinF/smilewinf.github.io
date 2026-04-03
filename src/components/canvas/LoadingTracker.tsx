@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useAppStore } from "../../stores/useAppStore";
 
 export function LoadingTracker() {
-  const { progress, active, loaded, total } = useProgress();
+  const { progress, active, total } = useProgress();
   const setLoadingProgress = useAppStore((s) => s.setLoadingProgress);
   const setLoaded = useAppStore((s) => s.setLoaded);
   const isLoaded = useAppStore((s) => s.isLoaded);
